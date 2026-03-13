@@ -1,0 +1,55 @@
+name: triggers
+run-name: ¡Estoy aprendiendo Triggers!
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - labeled
+    branches:
+      - 'main'
+    paths:
+      - '**.js'
+  issue_comment:
+    types: [created, deleted]
+  workflow_dispatch:
+    inputs:
+      lenguaje_favorito:
+        description: 'Lenguaje favorito'
+        default: Python
+        required: true
+        type: choice
+        options:
+        - Python
+        - JavaScript
+        - Go
+      nombre:
+        description: 'Tu nombre'
+        required: true
+        default: Juan
+        type: string
+  schedule:
+    - cron:  '0 12 * * *'
+jobs:
+  hola-mundo:
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out repository
+        uses: actions/checkout@v3
+      - name: Node Configuration
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Run index
+        run: node index.js
+  hola-mundo-manual:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print inputs
+        run: |
+          echo "Nombre: ${{ inputs.nombre }}"
+          echo "Lenguaje favorito: ${{ inputs.lenguaje_favorito }}"

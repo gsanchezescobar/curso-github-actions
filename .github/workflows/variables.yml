@@ -1,11 +1,10 @@
 name: Variables
 run-name: ¡Estoy aprendiendo a usar Variables!
-on:
-	workflow_dispatch
+on: workflow_dispatch
 env:
-	DIA_DE_SEMANA: Lunes
+  DIA_DE_SEMANA: Lunes
 jobs:
-	saludo-variables:
+  saludo-variables:
     runs-on: ubuntu-latest
     steps:
       - name: Saludar
